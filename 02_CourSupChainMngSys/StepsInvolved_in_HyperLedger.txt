@@ -1,0 +1,38 @@
+Steps Involved in Creating New Hyperledger Fabric:
+
+1. Create a new Gradle project for a car showroom
+	- This helps creates the Gradle project environment without any files
+2. Creating a Chaincode for Car Showroom
+	- Builds the project and Creates jar file which is ready-to-run distribution'
+3. Packaging the Chaincode
+	- Get into the Hyperledger Fabric Test Network
+	- Setup the environment variables where it states the port no. / Peer certificate / Orderer certificate
+	- pack the already created jar file along with other files noted in path (with version)
+	- Output file extension will be .tar.gz placed in "fabric-samples/test-network" folder
+	  (This ensures all dependencies and configurations are correctly bundled and ready to-run
+	  deploy within Hyperledger Fabric Network.
+4. Installing the Chaincode
+	- Install package on peer with port no. (localhost:7051) => Org 1 (in Terminal 1)
+		-> It gives the Package Id for Org 1
+	- Same package with different port no. (localhost:9051) with the 
+	  environment variables and install the package => Org 2 (in Terminal 2)
+		-> It gives the Package Id for Org 2 (it will be same as Org 1 as the same package is used)
+	- Query with the port no. and certificate to get the list of chaincode installed on Org 1
+		-> Shows the Package Id for Org 1
+	- Query with the port no. and certificate to get the list of chaincode installed on Org 2
+		-> Shows the Package Id for Org 2
+	- Download the installed chaincode from Org1 & Org2 (based on package id, port no & certificate)
+		-> This will get the files from the peer and saves it locally
+		-> It gets files from the peer node’s local file system (its internal storage)
+5. Approving the Chaincode
+	- Approve the chaincode with giving the port no, Orderer CA certificate, channel name, package name, 
+	  version and package Id (in both Org & Org2)
+6. Commiting the Chaincode (activates the chaincode on the channel) [in Org 1]
+	- Check commit readiness for Org1 & Org2 with Channel name, Chaincode name & output format (for Org1 & Org2)
+	- Set the environment variables with where it states the port no. / Peer certificates / Orderer certificate / MSP Id (for both Org1 & Org2 in single command)
+	- Commit the chaincode with channel name, certificates & port number (for both Org1 & Org2 in single command)
+	- Query the chaincode iwth channel name to check the details for approval status
+7. Accessing Chaincode Functions [in Org1]
+	- Call the initialize function in both Organizations with both host no, Orderer CA certificate, peer certificate
+	- Call the "addNewCar" function with the same parameters as like "initialize"
+
